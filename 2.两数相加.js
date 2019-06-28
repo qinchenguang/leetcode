@@ -40,6 +40,55 @@
  * @return {ListNode}
  */
 var addTwoNumbers = function(l1, l2) {
-    
+  let carry = 0;
+  let listNode = null;
+  let num1 = l1.val;
+  let num2 = l2.val;
+  // 链表改变
+  l1 = l1.next;
+  l2 = l2.next;
+  // 计算当前位置
+  let sum = num1 + num2 + carry;
+  let num = sum % 10;
+  carry = Math.floor(sum / 10);
+  let list = new ListNode(num);
+  listNode = list;
+  let source = listNode;
+  while((l1 && l2 )){
+    // 取值
+    let num1 = l1.val;
+    let num2 = l2.val;
+    // 链表改变
+    l1 = l1.next;
+    l2 = l2.next;
+    // 计算当前位置
+    let sum = num1 + num2 + carry;
+    let num = sum % 10;
+    carry = Math.floor(sum / 10);
+    let list = new ListNode(num);
+    listNode.next = list;
+    listNode = list
+  }
+
+  while((l1 && l2) || carry){
+    let num1 = l1 ? l1.val : 0;
+    let num2 = l2 ? l2.val : 0;
+    // 链表改变
+    l1 = l1 ? l1.next : null;
+    l2 = l2 ? l2.next : null;
+    // 计算当前位置
+    let sum = num1 + num2 + carry;
+    let num = sum % 10;
+    carry = Math.floor(sum / 10);
+    let list = new ListNode(num);
+    listNode.next = list;
+    listNode = list
+  }
+  if(l1){
+    listNode.next = l1;
+  }else {
+    listNode.next = l2;
+  }
+  return source;
 };
 
