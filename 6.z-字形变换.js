@@ -52,6 +52,39 @@
  * @return {string}
  */
 var convert = function(s, numRows) {
-    
+    if(numRows == 1){
+      return s;
+    }
+    numRows = numRows - 1;
+    let twodimArray = [];
+    let xPoint = 0;
+    let yPoint = 0;
+    let week = numRows * 2;
+    for(i = 0; i < s.length; i++) {
+      let flag = i % week;
+      if (flag <= numRows){
+        xPoint = flag;
+        yPoint = Math.floor(i / week) * numRows;
+      } else {
+        let base = Math.floor(i / week) ;
+        xPoint = Math.abs(numRows - flag % numRows);
+        yPoint = Math.abs(base * numRows + flag % numRows);
+      }
+
+      // console.log(xPoint,yPoint)
+      if(twodimArray[xPoint]){
+        twodimArray[xPoint][yPoint] = s[i];
+      } else {
+        twodimArray[xPoint] = [];
+        twodimArray[xPoint][yPoint] = s[i]
+      }
+    }
+    let str = '';
+    for(let i = 0; i < twodimArray.length; i++) {
+      str += twodimArray[i].join('');
+    }
+    return str;
 };
+ // convert('A', 1)
+// 转换为二维数组来填充
 
