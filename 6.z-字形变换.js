@@ -52,31 +52,21 @@
  * @return {string}
  */
 var convert = function(s, numRows) {
-    if(numRows == 1){
+    if(s.length <= numRows || numRows == 1) {
       return s;
     }
-    numRows = numRows - 1;
-    let twodimArray = [];
-    let xPoint = 0;
-    let yPoint = 0;
-    let week = numRows * 2;
+    let twodimArray = new Array(numRows)
+    // fill 导致变量引用
+    for(let i = 0; i < numRows; i++) {
+      twodimArray[i] = [];
+    }
+    let count = 0;
+    let reverse = false;
     for(i = 0; i < s.length; i++) {
-      let flag = i % week;
-      if (flag <= numRows){
-        xPoint = flag;
-        yPoint = Math.floor(i / week) * numRows;
-      } else {
-        let base = Math.floor(i / week) ;
-        xPoint = Math.abs(numRows - flag % numRows);
-        yPoint = Math.abs(base * numRows + flag % numRows);
-      }
-
-      // console.log(xPoint,yPoint)
-      if(twodimArray[xPoint]){
-        twodimArray[xPoint][yPoint] = s[i];
-      } else {
-        twodimArray[xPoint] = [];
-        twodimArray[xPoint][yPoint] = s[i]
+      twodimArray[count].push(s[i]);
+      reverse ? count -- : count ++;
+      if(count === numRows - 1 || count === 0) {
+        reverse = !reverse;
       }
     }
     let str = '';
@@ -85,6 +75,6 @@ var convert = function(s, numRows) {
     }
     return str;
 };
- // convert('A', 1)
+// convert('ABc', 2)
 // 转换为二维数组来填充
 
