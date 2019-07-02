@@ -76,7 +76,6 @@ var myAtoi = function(str) {
     let targetArray = /^([\s|\-\+]*[0-9]*)/ig.exec(str);
     if (targetArray) {
       let num = targetArray[0];
-      console.log(targetArray)
       num = Number(num);
       let min = - Math.pow(2,31);
       let max = Math.pow(2,31) - 1;
