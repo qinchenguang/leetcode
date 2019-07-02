@@ -44,6 +44,22 @@
  * @return {number}
  */
 var reverse = function(x) {
-    
+    let min = - Math.pow(2,31);
+    let max = Math.pow(2,31) - 1;
+    let num = 0;
+    if (x >= min  && x <= max) {
+      let negativeFlag = x < 0;
+      num = Number(String(Math.abs(x)).split('').reverse().join(''));
+      if (negativeFlag) {
+        num = 0 - num;
+      }
+    } else {
+      return 0
+    }
+    if (num >= min  && num <= max) {
+      return num
+    } else {
+      return 0
+    }
 };
 
