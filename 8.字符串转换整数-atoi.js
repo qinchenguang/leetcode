@@ -73,6 +73,26 @@
  * @return {number}
  */
 var myAtoi = function(str) {
-    
+    let targetArray = /^([\s|\-\+]*[0-9]*)/ig.exec(str);
+    if (targetArray) {
+      let num = targetArray[0];
+      console.log(targetArray)
+      num = Number(num);
+      let min = - Math.pow(2,31);
+      let max = Math.pow(2,31) - 1;
+      if (num >= min  && num <= max) {
+        return num
+      } else if(Object.is(num,NaN)){
+        return 0;
+      }else{
+        if(num > 0) {
+          return max;
+        } else {
+          return min;
+        }
+      }
+    } else {
+      return 0;
+    }
 };
-
+// myAtoi('.1');
