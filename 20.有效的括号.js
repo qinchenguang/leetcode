@@ -59,6 +59,12 @@
  * @return {boolean}
  */
 var isValid = function(s) {
-    
+  while(/\(\)|\[\]|\{\}/g.test(s)){
+    s = s.replace(/\(\)/ig,'').replace(/\[\]/ig,'').replace(/\{\}/ig,'');
+  }
+  if (!s) return true;
+  return false;
 };
-
+// console.log(isValid("()"))
+// 一个括号关闭的时候，他内部的括号也要关闭 未关闭为false
+// 直接删除匹配到的括号
