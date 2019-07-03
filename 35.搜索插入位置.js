@@ -48,6 +48,20 @@
  * @return {number}
  */
 var searchInsert = function(nums, target) {
-    for(let i = 0; i < nums.length; i++){}
+  return findArrayIndex(nums, target,  0, nums.length - 1);
 };
 
+function findArrayIndex(nums,target,start, end){
+  if(end < start) {
+    return start;
+  }
+  const midPoint = Math.floor((start + end)/2);
+  if(nums[midPoint] == target){
+    return midPoint;
+  } else if( nums[midPoint] > target) {
+    return findArrayIndex(nums, target, start, midPoint - 1);
+  } else {
+    return findArrayIndex(nums, target, midPoint + 1, end);
+  }
+};
+// searchInsert([1,3,5,6],2)
