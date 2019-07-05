@@ -61,31 +61,82 @@
  * @return {boolean}
  */
 var isBalanced = function(root) {
-  if(!root) return true;
-  let array = [];
-  array.push(root); // 初始数组
-  let i = 1; // 初始num
-  let waring = false; // 警告
-  while(array.length){
-    let newChild = [];
-    for(let j = 0; j < array.length; j++){
-      if(array[j].left) newChild.push(array[j].left)
-      if(array[j].right) newChild.push(array[j].right)
-    }
-    i = i * 2;
-    if(newChild.length < i && newChild.length !== 0){
-      console.log('??')
-      if(waring === true) {
-        return false;
+  if(!root) return true
+  let depth = new Map
+  let s = []
+  let last
+  
+  while(root || s.length) {
+      if(root) {
+          s.push(root)
+          root = root.left
+      }else {
+          root = s[s.length-1];
+          if(!root.right || last == root.right) {
+              last = s.pop()
+              
+              let left = depth.get(last.left)||0
+              let right = depth.get(last.right)||0
+              if(Math.abs(left-right)>1) return false
+              depth.set(last, 1 + Math.max(left, right))
+              
+              root = null
+          }else {
+              root = root.right
+          }
       }
-      waring = true;
-    }
-    array = newChild;
-    
   }
   return true
+  
 };
+// 错误想法：
 // 根据每个子节点检测。
 // 从树的第一层往下检测
 // 计算每一次是否是完全二叉树。也就是每层就是上一层 * 2
 // 出现2层的偏差就是错误
+
+// if(!root) return true;
+//   let array = [];
+//   array.push(root); // 初始数组
+//   let i = 1; // 初始num
+//   let waring = false; // 警告
+//   while(array.length){
+//     let newChild = [];
+//     for(let j = 0; j < array.length; j++){
+//       if(array[j].left) newChild.push(array[j].left)
+//       if(array[j].right) newChild.push(array[j].right)
+//     }
+//     i = i * 2;
+//     if(newChild.length < i && newChild.length !== 0){
+//       console.log('??')
+//       if(waring === true) {
+//         return false;
+//       }
+//       waring = true;
+//     }
+//     array = newChild;
+    
+//   }
+//   return true
+
+
+// 正确解法：
+// 先存放左子数，然后在遍历右
+// [1,2,2,3,3,3,3,4,4,4,4,4,4,null,null,5,5]
+
+// [1,2,3,4,5]
+
+// [1,2,3,4]
+
+// [1,2,3,4,5]
+
+// [1,2,3,4]
+
+// [1,2,3]
+
+// [1,2,3,4]
+
+// [1,2,3]
+
+// [1,2]
+
